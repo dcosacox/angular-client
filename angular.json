@@ -35,6 +35,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/dist/css/font-awesome.min.css",
               "src/styles.css"
             ],
             "scripts": [],

@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Task Manager</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
+            <input name="searchText" [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange()"
+                class="w-50 form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <button (ngClick)="addTask()" class="btn btn-outline-success mx-2 w-50 justify-content-md-end" type="submit"><i
+                    class="fa fa-plus-circle mx-2"></i>Add Task</button>
+        </div>
+    </div>
+</nav>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="tasks && tasks.length === 0">
+            <td colspan="8" class="text-center">No tasks found.</td>
+        </tr>
+        <tr *ngFor="let task of filteredTasks; let i = index">
+
+            <th scope="row">{{ task.id }}</th>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task.dueAt | date:'dd/MM/yyyy hh:mm a' }}
+                <label *ngIf="task.dueAt < now()" class="badge bg-danger mx-2">Overdue</label>
+            </td>
+            <td>
+                <mat-form-field appearance="fill" class="w-70">
+                    <mat-label>Status</mat-label>
+                    <mat-select [(ngModel)]="task.status" name="status-{{task.id}}"
+                        (ngModelChange)="onStatusChange(task, $event)">
+                        <mat-option *ngFor="let status of statusesArray" [value]="status.title"
+                            [ngClass]="'text-light bg-' + status.color">
+                            {{ status.title }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>{{task.createdAt | date:'dd/MM/yyyy hh:mm a' }} </td>
+            <td>{{task.updatedAt | date: 'dd/MM/yyyy hh:mm a' }} </td>
+            <td><button class="btn btn-info"><i class="fa fa-pencil mx-2"></i>Edit</button>
+                <button class="btn btn-danger mx-3"><i class="fa fa-trash mx-2"></i>Delete</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

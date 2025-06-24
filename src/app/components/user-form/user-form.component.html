@@ -1,0 +1,39 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow" style="width: 22rem;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">{{ isEditMode ? 'Update user' : 'Create a new user' }} </h2>
+
+            <form #loginForm="ngForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username"
+                        type="text" [(ngModel)]="user.username" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter a valid email"
+                        type="text" [(ngModel)]="user.email" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number"
+                        type="phone" [(ngModel)]="user.phone" required />
+                </div>
+
+                <div class="d-flex justify-content-center mb-3" *ngIf="isLoading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary w-100 mb-3" [disabled]="!user.email || !user.phone"
+                    (click)="createUser()">
+                    {{ isEditMode ? 'Update User' : 'Create User' }}
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
